@@ -1,15 +1,11 @@
-from flask import (
-    Flask,
-    jsonify,
-    request
-)
+from flask import Flask, jsonify, request
 
 
 def create_app():
     app = Flask(__name__)
 
     def get_request_args():
-        """ Get args from request """
+        """Get args from request"""
         data = request.json
         return data.get("numbers"), data.get("q")
 
@@ -39,7 +35,11 @@ def create_app():
         numbers, _ = get_request_args()
         s_nums = sorted(numbers)
         mid = len(numbers) / 2.0
-        res = {"median": s_nums[int(mid)] if mid % 2 else (s_nums[int(mid) - 1] + s_nums[int(mid)]) / 2}
+        res = {
+            "median": s_nums[int(mid)]
+            if mid % 2
+            else (s_nums[int(mid) - 1] + s_nums[int(mid)]) / 2
+        }
         return jsonify(res), 200
 
     @app.post("/percentile")
@@ -48,7 +48,7 @@ def create_app():
         s_nums = sorted(numbers)
         orank = (q / 100) * len(numbers)
         idx = int(orank) if orank % 1 else int(orank - 1)
-        res = { f"{q}_percentile": s_nums[idx] }
+        res = {f"{q}_percentile": s_nums[idx]}
         return jsonify(res), 200
 
     return app
