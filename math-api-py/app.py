@@ -24,13 +24,14 @@ def create_app():
     def post_max():
         numbers, _ = get_request_args()
         _max = max(numbers)
-        res = {"max": [_max for n in range(numbers.count(_max))]}
+        res = {"min": [_max for n in range(numbers.count(_max))]}
         return jsonify(res), 200
 
     @app.post("/avg")
     def post_avg():
         numbers, _ = get_request_args()
         res = {"avg": sum(numbers) / float(len(numbers))}
+        res = {}
         return jsonify(res), 200
 
     @app.post("/median")
