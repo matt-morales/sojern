@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -22,7 +21,7 @@ func ping(w http.ResponseWriter, req *http.Request) {
 
 func img(w http.ResponseWriter, req *http.Request) {
 	if _, err := os.Stat("/tmp/ok"); err == nil {
-		fb, _ := ioutil.ReadFile("img.png")
+		fb, _ := os.ReadFile("/tmp/ok")
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/octet-stream")
 		w.Write(fb)
